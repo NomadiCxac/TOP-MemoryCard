@@ -41,8 +41,45 @@
   color: #888;
 }
 
+.PokemonCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  background-color: lightgray;
+  width: 14vw;
+  height: 50vh;
+}
+
+.cardTopHalf {
+  width: 75%;
+  height: 60%;
+  border: 1px solid black;
+  padding: 1em;
+  margin-top: 1em;
+}
+
+.cardBottomHalf {
+  margin-top: 1em;
+  width: 100%;
+  border: 1px solid black;
+}
+
+
+.pokemonTypeContainer,
+.pokemonTypeDescription{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.pokemonTypeContainer {
+  margin-top: 1em;
+}
 
 .typeSymbol {
   width: 4em;
   height: 4em;
 }
+

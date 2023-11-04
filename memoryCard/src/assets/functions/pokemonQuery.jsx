@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { capitalizeFirstLetter } from './helperFunctions';
 import PokemonCard from '../components/pokemonCard';
 
 function PokemonQuery() {
@@ -10,6 +9,7 @@ function PokemonQuery() {
 
   const fetchData = () => {
     setLoading(true);
+    setError(null); // Reset any previous errors
     fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`)
       .then(response => {
         if (!response.ok) {
@@ -24,18 +24,15 @@ function PokemonQuery() {
       })
       .then(data => {
         setData(data);
-        setLoading(false);
-        console.log(data);
-        console.log(data.types[0].type.name)
-        console.log(data.types[1].type.name)
+        // No need to have a monoType state, you can derive this from the data
       })
       .catch(error => {
         console.error("There was a problem with the fetch operation:", error.message);
         setError(error);
-        setLoading(false);
+      })
+      .finally(() => {
+        setLoading(false); // This will be executed whether the fetch succeeded or failed
       });
-
-
   }
 
   return (
@@ -46,19 +43,19 @@ function PokemonQuery() {
         onChange={(e) => setPokemonName(e.target.value)}
         placeholder="Enter Pokémon name"
       />
-      <button onClick={fetchData}>Fetch Pokémon</button>
-
+      <button onClick={fetchData} disabled={loading}>Fetch Pokémon</button>
 
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error.message}</p>}
       {data && (
         <PokemonCard 
-        pokemonName={pokemonName}
-        pokemonSprite={data.sprites.front_default}
-        pokemonShinySprite={data.sprites.front_shiny}
-        pokemonTypeOne={data.types[0].type.name}
-        pokemonTypeTwo={data.types[1].type.name}
-      />
+          pokemonName={pokemonName}
+          pokemonSprite={data.sprites.front_default}
+          pokemonShinySprite={data.sprites.front_shiny}
+          pokemonTypeOne={data.types[0].type.name}
+          // Render pokemonTypeTwo only if there's more than one type
+          pokemonTypeTwo={data.types.length > 1 ? data.types[1].type.name : undefined}
+        />
       )}
     </div>
   );
