@@ -3,7 +3,6 @@ import { main as getTopMatchups } from './getTopMatchups.js';
 
 function parsePokemonNames(pokemonList) {
     return pokemonList.map(entry => {
-        console.log(entry);
       // Split the entry by spaces and filter out any parts with '+' or '/'
       const nameParts = entry.split(' ').filter(part => !part.includes('+') && !part.includes('/'));
       // Join the remaining parts back into a string
@@ -11,7 +10,9 @@ function parsePokemonNames(pokemonList) {
     });
   }
 
-export default async function cardData (isMatchUpBest, pokemonString) {
+export default async function getMatchUpData (isMatchUpBest, pokemonString) {
+
+    console.log(isMatchUpBest);
 
     try {
         let pokemonMatchUpDataObject = await getTopMatchups(pokemonString)
@@ -20,6 +21,7 @@ export default async function cardData (isMatchUpBest, pokemonString) {
     let pokemonArray = [];
 
     if (isMatchUpBest === true) {
+        console.log("step in here best")
         for (let i = 0; i < pokemonMatchUpDataObject.best.length; i++) {
             pokemonArray.push(pokemonMatchUpDataObject.best[i]["Pokemon"]);
         }
@@ -27,6 +29,7 @@ export default async function cardData (isMatchUpBest, pokemonString) {
 
     // User wants worst matchups for the pokemon
     if (isMatchUpBest === false) {
+        console.log("step in here worst")
         for (let i = 0; i < pokemonMatchUpDataObject.worst.length; i++) {
             pokemonArray.push(pokemonMatchUpDataObject.worst[i]["Pokemon"]);
         }
@@ -42,8 +45,8 @@ export default async function cardData (isMatchUpBest, pokemonString) {
 
 }
 
-cardData(false, "voltorb").then(pokemonArray => {
-    console.log(pokemonArray);
-}).catch(error => {
-    console.error("Error:", error);
-});
+// getMatchUpData(false, "voltorb").then(pokemonArray => {
+//     console.log(pokemonArray);
+// }).catch(error => {
+//     console.error("Error:", error);
+// });
