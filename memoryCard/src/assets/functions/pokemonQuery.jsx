@@ -18,27 +18,35 @@ const PokeFetcher = () => {
   async function fetchAndSetMatchups(matchupData) {
     // Map over matchupData to fetch details for each Pokemon variant
     const matchupDetailsPromises = matchupData.map(async (name) => {
-      const formattedPokemonName = formatPokemonVariantName(name);
-      const baseName = returnBaseName(name);
-      const variants = await fetchPokemonVariants(baseName);
-      const variantName = findVariantName(variants, formattedPokemonName);
-      if (variantName) {
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${variantName.toLowerCase()}`);
-        if (response.ok) {
-          return response.json(); // Get the JSON from the response
+      try {
+        const formattedPokemonName = formatPokemonVariantName(name);
+        const baseName = returnBaseName(name);
+        const variants = await fetchPokemonVariants(baseName);
+        const variantName = findVariantName(variants, formattedPokemonName);
+        console.log(`Attempting to fetch details for: ${variantName || 'No variant found'}`);
+  
+        if (variantName) {
+          const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${variantName.toLowerCase()}`);
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return await response.json(); // Get the JSON from the response if successful
         }
+      } catch (error) {
+        console.error(`Error fetching data for Pokemon "${name}":`, error.message);
       }
-      return null; // If fetch failed or no variantName was found
+      return null; // Return null to handle cases where the fetch fails or a variant name isn't found
     });
 
   // Wait for all the fetches to complete and filter out any null responses
-  const matchupsResponses = (await Promise.all(matchupDetailsPromises)).filter(Boolean);
-
-  // Now convert the Response objects to JSON
-  const matchupsJsonPromises = matchupsResponses.map(response => response.json());
-  const matchupsJson = await Promise.all(matchupsJsonPromises);
-
-  setPokemonMatchupsList(matchupsJson); // Now this list contains JSON objects rather than Response objects
+  const matchupsJson= (await Promise.all(matchupDetailsPromises)).filter(Boolean);
+  setPokemonMatchupsList(matchupsJson.map(pokemonMatchup => ({
+    pokemonName: pokemonMatchup.name, // You can use whatever key names you want here
+    pokemonSprite: pokemonMatchup.sprites.front_default,
+    pokemonShinySprite: pokemonMatchup.sprites.front_shiny,
+    pokemonTypeOne: pokemonMatchup.types[0].type.name,
+    pokemonTypeTwo: pokemonMatchup.types[1]?.type.name || undefined,
+  }))); // Now this list contains JSON objects rather than Response objects
 }
 
   async function fetchData() {
@@ -89,6 +97,7 @@ const PokeFetcher = () => {
       {/* Assuming you have a condition to render the PokemonCard when data is ready */}
       {pokemonData.pokemonName && (
         <PokemonCard
+          key = {pokemonData.pokemonName}
           pokemonName={pokemonData.pokemonName}
           pokemonSprite={pokemonData.pokemonSprite}
           pokemonShinySprite={pokemonData.pokemonShinySprite}
@@ -98,11 +107,18 @@ const PokeFetcher = () => {
       )}
       {/* Render fetched matchup Pokémon cards */}
       {pokemonMatchupsList.map((pokemon, index) => (
-  <div key={index}>
-    <h3>{pokemon.name}</h3> {/* Display the Pokemon's name */}
-    <img src={pokemon.sprites.front_default} alt={`${pokemon.name} sprite`} /> {/* Display the Pokemon's default sprite */}
-    {/* Add more Pokemon details as desired */}
-  </div>
+        <div 
+          key = {pokemon.pokemonName + "-card" + "-" + index}
+        >
+          <PokemonCard
+           
+            pokemonName={pokemon.pokemonName}
+            pokemonSprite={pokemon.pokemonSprite}
+            pokemonShinySprite={pokemon.pokemonShinySprite}
+            pokemonTypeOne={pokemon.pokemonTypeOne}
+            pokemonTypeTwo={pokemon.pokemonTypeTwo}
+            /> 
+        </div>
 ))}
     </>
   );

@@ -1,4 +1,5 @@
 import typeIcons from "../functions/typeIcons";
+import PropTypes from 'prop-types';
 import { capitalizeFirstLetter } from "../functions/helperFunctions";
 
 function PokemonCard({pokemonName, pokemonSprite, pokemonShinySprite, pokemonTypeOne, pokemonTypeTwo}) {
@@ -50,5 +51,15 @@ function PokemonCard({pokemonName, pokemonSprite, pokemonShinySprite, pokemonTyp
         </div>
     );
 }
+
+// Required static values to map to Pokemon Card component:
+
+PokemonCard.propTypes = {
+    pokemonName: PropTypes.string.isRequired,
+    pokemonSprite: PropTypes.string.isRequired,
+    pokemonShinySprite: PropTypes.string.isRequired,
+    pokemonTypeOne: PropTypes.string.isRequired,
+    pokemonTypeTwo: PropTypes.string // Not required as it can be undefined or null
+};
 
 export default PokemonCard;

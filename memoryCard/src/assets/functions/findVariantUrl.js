@@ -56,6 +56,7 @@ export function fetchPokemonVariants(pokemonName) {
     return fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokemonName.toLowerCase()}/`)
       .then((response) => {
         if (!response.ok) {
+          console.log(`Response was not ok for ${pokemonName}`)
           switch (response.status) {
             case 404:
               throw new Error('Pokémon not found.');

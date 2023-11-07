@@ -35,7 +35,9 @@ export default async function getMatchUpData (isMatchUpBest, pokemonString) {
         }
     }
 
+
     const parsedPokemonArray = parsePokemonNames(pokemonArray);
+    console.log(parsedPokemonArray);
     return parsedPokemonArray;
     } 
     
