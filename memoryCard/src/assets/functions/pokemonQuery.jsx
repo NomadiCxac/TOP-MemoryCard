@@ -7,7 +7,6 @@ const PokeFetcher = () => {
   const [loading, setLoading] = useState(false);
   const [searchedPokemon, setSearchedPokemon] = useState('');
   const [pokemonData, setPokemonData] = useState({});
-  const [pokemonMatchupsNames, setPokemonMatchupsNames] = useState([]);
   const [pokemonMatchupsList, setPokemonMatchupsList] = useState([]);
 
   useEffect(() => {
@@ -66,7 +65,7 @@ const PokeFetcher = () => {
       });
   
       // Fetch matchup data
-      const matchupData = await getMatchUpData(true, searchedPokemon);
+      const matchupData = await getMatchUpData(false, searchedPokemon);
   
       // Fetch and set detailed matchup data
       await fetchAndSetMatchups(matchupData); // Handle fetching of details within this function
@@ -107,18 +106,14 @@ const PokeFetcher = () => {
       )}
       {/* Render fetched matchup Pokémon cards */}
       {pokemonMatchupsList.map((pokemon, index) => (
-        <div 
-          key = {pokemon.pokemonName + "-card" + "-" + index}
-        >
           <PokemonCard
-           
+            key = {pokemon.pokemonName + "-card" + "-" + index}
             pokemonName={pokemon.pokemonName}
             pokemonSprite={pokemon.pokemonSprite}
             pokemonShinySprite={pokemon.pokemonShinySprite}
             pokemonTypeOne={pokemon.pokemonTypeOne}
             pokemonTypeTwo={pokemon.pokemonTypeTwo}
             /> 
-        </div>
 ))}
     </>
   );

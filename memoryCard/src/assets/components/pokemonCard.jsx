@@ -56,8 +56,8 @@ function PokemonCard({pokemonName, pokemonSprite, pokemonShinySprite, pokemonTyp
 
 PokemonCard.propTypes = {
     pokemonName: PropTypes.string.isRequired,
-    pokemonSprite: PropTypes.string.isRequired,
-    pokemonShinySprite: PropTypes.string.isRequired,
+    pokemonSprite: PropTypes.string,
+    pokemonShinySprite: PropTypes.string,
     pokemonTypeOne: PropTypes.string.isRequired,
     pokemonTypeTwo: PropTypes.string // Not required as it can be undefined or null
 };
