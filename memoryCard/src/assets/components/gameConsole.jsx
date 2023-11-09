@@ -5,7 +5,8 @@ export default function GameConsole({
     searchedPokemon,
     selectedCup,
     selectedMatchupType,
-    selectedMatchupList
+    selectedMatchupList,
+    onFetchedData,
 }) {
  
     const { loading, pokemonData, pokemonMatchupsList, fetchData } = usePokeFetcher(searchedPokemon);
@@ -35,9 +36,8 @@ export default function GameConsole({
         logValues(); // Proceed to log values if validation is successful
         // ... other actions after validation and logging values
 
-        await fetchData().then(
-        console.log(pokemonData, pokemonMatchupsList)
-        )
+        await fetchData()
+        onFetchedData(pokemonData, pokemonMatchupsList);
     }
 
 

@@ -18,6 +18,7 @@ function App() {
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [pokemonData, setPokemonData] = useState({});
   const [pokemonMatchupsList, setPokemonMatchupsList] = useState([]);
+  
 
   // State Logic to set the specified and desired game conditions
   const [searchedPokemon, setSearchedPokemon] = useState('');
@@ -25,6 +26,13 @@ function App() {
   const [selectedMatchupType, setSelectedMatchupType,] = useState('');
   const [selectedMatchupList, setSelectedMatchupList] = useState('');
 
+  // Handlers:
+
+  function handleFetchedData (pokemon, matchups) {
+    setPokemonData(pokemon);
+    setPokemonMatchupsList(matchups);
+    setIsDataLoaded(true);
+  }
 
 
   return (
@@ -53,6 +61,7 @@ function App() {
         selectedCup={selectedCup}
         selectedMatchupType={selectedMatchupType}
         selectedMatchupList={selectedMatchupList}
+        onFetchedData={handleFetchedData}
       />
 
       <div className='currentPokemon'>
