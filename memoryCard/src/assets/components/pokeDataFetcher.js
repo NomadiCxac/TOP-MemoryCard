@@ -19,7 +19,7 @@ export function usePokeFetcher (searchedPokemon) {
       try {
         const formattedPokemonName = formatPokemonVariantName(name);
         const baseName = returnBaseName(name);
-        const variants = await fetchPokemonVariants(baseName);
+        const variants = await fetchPokemonVariants(baseName); // async fn that calls pokeAPI
         const variantName = findVariantName(variants, formattedPokemonName);
         console.log(`Attempting to fetch details for: ${variantName || 'No variant found'}`);
   
@@ -36,15 +36,20 @@ export function usePokeFetcher (searchedPokemon) {
       return null; // Return null to handle cases where the fetch fails or a variant name isn't found
     });
 
-  // Wait for all the fetches to complete and filter out any null responses
-  const matchupsJson= (await Promise.all(matchupDetailsPromises)).filter(Boolean);
-  setPokemonMatchupsList(matchupsJson.map(pokemonMatchup => ({
-    pokemonName: pokemonMatchup.name, // You can use whatever key names you want here
-    pokemonSprite: pokemonMatchup.sprites.front_default,
-    pokemonShinySprite: pokemonMatchup.sprites.front_shiny,
-    pokemonTypeOne: pokemonMatchup.types[0].type.name,
-    pokemonTypeTwo: pokemonMatchup.types[1]?.type.name || undefined,
-  }))); // Now this list contains JSON objects rather than Response objects
+  // Wait for all the fetches to complete and use filter(Boolean) to remove any null responses
+
+    const results = await Promise.all(matchupDetailsPromises);
+    const validResults = results.filter(Boolean); // Remove any null entries
+    return validResults.map(pokemonMatchup => {
+      // Return the desired object structure
+      return {
+        pokemonName: pokemonMatchup.name,
+        pokemonSprite: pokemonMatchup.sprites.front_default,
+        pokemonShinySprite: pokemonMatchup.sprites.front_shiny,
+        pokemonTypeOne: pokemonMatchup.types[0].type.name,
+        pokemonTypeTwo: pokemonMatchup.types[1]?.type.name || undefined,
+      };
+    }); 
 }
 
   async function fetchData() {
@@ -79,3 +84,40 @@ export function usePokeFetcher (searchedPokemon) {
 
   return { loading, pokemonData, pokemonMatchupsList, fetchData, fetchAndSetMatchups };
 }
+
+// For loop consideration for fetchAndSetMatchups
+// async function fetchAndSetMatchups(matchupData) {
+//   let matchupDetails = [];
+
+//   for (const name of matchupData) {
+//     try {
+//       const formattedPokemonName = formatPokemonVariantName(name);
+//       const baseName = returnBaseName(name);
+//       const variants = await fetchPokemonVariants(baseName);
+//       const variantName = findVariantName(variants, formattedPokemonName);
+
+//       if (!variantName) {
+//         console.log('No variant found for:', name);
+//         continue; // Skip to the next iteration of the loop
+//       }
+
+//       const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${variantName.toLowerCase()}`);
+//       if (!response.ok) {
+//         throw new Error(`HTTP error! status: ${response.status}`);
+//       }
+//       const pokemonMatchup = await response.json();
+//       matchupDetails.push({
+//         pokemonName: pokemonMatchup.name,
+//         pokemonSprite: pokemonMatchup.sprites.front_default,
+//         pokemonShinySprite: pokemonMatchup.sprites.front_shiny,
+//         pokemonTypeOne: pokemonMatchup.types[0].type.name,
+//         pokemonTypeTwo: pokemonMatchup.types[1]?.type.name || undefined,
+//       });
+//     } catch (error) {
+//       console.error(`Error fetching data for Pokemon "${name}":`, error.message);
+//       // Optionally push null or handle the error differently
+//     }
+//   }
+
+//   return matchupDetails; // This array now only contains successfully fetched details
+// }
