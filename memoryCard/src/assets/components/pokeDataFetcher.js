@@ -20,13 +20,18 @@ export async function fetchPokemonDetails(searchedPokemon) {
 export async function fetchPokemonMatchups(matchupData) {
     const promises = matchupData.map(async (name) => {
         try {
+            const isShadow = name.includes("Shadow"); // Check if the name includes "Shadow" and store it as a boolean
             const formattedName = formatPokemonVariantName(name);
             const baseName = returnBaseName(name);
             const variantName = findVariantName(await fetchPokemonVariants(baseName), formattedName);
             if (variantName) {
                 const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${variantName.toLowerCase()}`);
                 if (response.ok) {
-                    return await response.json();
+                  const pokemonData = await response.json();
+                  return {
+                    ...pokemonData, // Spread the fetched pokemon data
+                    isShadow, // Include the isShadow boolean in the returned object
+                  };
                 }
             }
         } catch (error) {
@@ -41,7 +46,8 @@ export async function fetchPokemonMatchups(matchupData) {
         pokemonSprite: pokemonMatchup.sprites.front_default,
         pokemonShinySprite: pokemonMatchup.sprites.front_shiny,
         pokemonTypeOne: pokemonMatchup.types[0].type.name,
-        pokemonTypeTwo: pokemonMatchup.types[1]?.type.name || undefined,
+        pokemonTypeTwo: pokemonMatchup.types[1]?.type.name || false,
+        isShadow: pokemonMatchup.isShadow
     }));
 }
 

@@ -44,8 +44,8 @@ export default async function getMatchUpData (isMatchUpBest, pokemonString) {
     } 
     
     catch (error) {
-        return null;
         console.error("An error occurred:", error);
+        return null;
     }
 
 }

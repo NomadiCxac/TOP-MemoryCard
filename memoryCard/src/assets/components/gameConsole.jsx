@@ -44,10 +44,14 @@
 
 
         return (
-            <div className='gameConsole'>
-            <button onClick={handlePlayButtonClick}>Play</button>
-            <div>Top 10 Best/Worst Matchups for {searchedPokemon} in the {selectedCup}</div>
-            <div>Score</div>
+        <div className='gameConsole'>
+            <div className='gcTopHalf'>
+                <div>Top 10 Best/Worst Matchups for {searchedPokemon} in the {selectedCup}</div>
+            </div>
+            <div className='gcBottomHalf'>
+                <button onClick={handlePlayButtonClick}>Start Game</button>
+                <div>Score</div>
+            </div>
         </div>
         )
     }

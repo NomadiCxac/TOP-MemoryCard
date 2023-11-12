@@ -12,6 +12,7 @@ html, body {
   text-align: center;
   padding: 1em; /* This padding could cause overflow if your content is too large */
   box-sizing: border-box; /* Includes padding and border in the element's total width and height */
+  background-color:  rgb(224, 245, 255);
 }
 
 
@@ -30,18 +31,54 @@ html, body {
   justify-content: space-evenly;
   border: 1px solid black;
   width: 25%;
-  height: 50%;
+  height: 80%;
+  margin-left: 5.2em;
+  margin-top: 2.5em;
+  color: rgb(12, 48, 87);
+  font-size: larger;
+  font-weight: 700;
 }
+
+.gameSetupDashboard > label{
+  margin-left: 1.5em;
+}
+
+.gameSetupDashboard > input,
+.gameSetupDashboard > select{
+  margin-left: 2em;
+}
+
 
 .gameConsole {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: flex-start;
   justify-content: space-evenly;
   border: 1px solid black;
   width: 40%;
-  height: 50%;
-  margin-right: 5em
+  height: 80%;
+  margin-right: 5em;
+  margin-top: 2.5em;
+  color: rgb(12, 48, 87);
+  font-size: larger;
+  font-weight: 700;
+}
+
+/*  rgb(211, 243, 253) 
+rgb(12, 48, 87);*/
+
+.gcTopHalf {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.gcBottomHalf {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
 }
 
 .currentPokemon {
@@ -57,10 +94,13 @@ html, body {
   justify-content: center;
   border: 1px solid black;
   background-color: lightgray;
-  width: 14vw;
+  width: 15vw;
   height: 40vh;
   pointer-events: none; /* Prevents all click, state and hover effects */
   cursor: default; /* Resets the cursor to the default */
+  margin-right: 1.5em;
+  background-color: rgb(249, 173, 133);
+  color: white;
 }
 
 .PokemonCard {
@@ -70,12 +110,33 @@ html, body {
   justify-content: center;
   border: 1px solid black;
   background-color: lightgray;
-  width: 14vw;
+  width: 15vw;
   height: 40vh;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: box-shadow 0.2s, transform 0.2s; /* Smooth transition for box-shadow and transform */
   cursor: pointer; /* Changes the cursor to indicate that the item is clickable */
+  /* background-color: rgb(150, 204, 229); */
+  background-color: rgb(105, 174, 209);
+  color: white;
 }
+
+.PokemonCard.Shadow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid purple;
+  background-color: lightgray;
+  width: 15vw;
+  height: 40vh;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.2s, transform 0.2s; /* Smooth transition for box-shadow and transform */
+  cursor: pointer; /* Changes the cursor to indicate that the item is clickable */
+  /* background-color: rgb(150, 204, 229); */
+  background-color: rgb(105, 174, 209);
+  color: white;
+}
+
 
 .PokemonCard:active {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Smaller shadow for pressed effect */
@@ -83,7 +144,8 @@ html, body {
 }
 
 .PokemonCard:hover {
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Slightly larger shadow for hover effect */
+  box-shadow: 0 6px 12px rgba(12, 48, 87, 1); /* Slightly larger shadow for hover effect */
+  color: rgb(170, 252, 170);
 }
 
 .PokemonCard:active {
@@ -91,8 +153,13 @@ html, body {
   transform: translateY(2px); /* Moves the card down slightly when pressed */
 }
 
+.PokemonCard.Shadow:hover {
+  box-shadow: 0 6px 12px rgba(12, 48, 87, 1); /* Slightly larger shadow for hover effect */
+  color: rgb(122, 50, 205);
+}
+
 .cardTitle {
-  margin-top: -0.75em;
+  margin-top: -0.3em;
 }
 
 
@@ -100,13 +167,16 @@ html, body {
   width: 75%;
   height: 50%;
   border: 1px solid black;
+  background-color: rgba(255, 255, 255, 0.425);
   padding: 1em;
-  margin-top: 1em;
+  margin-top: 1.4em;
 }
 
 .pokemonImageContainer {
   height: 100%;
-  margin-bottom: 3em;
+  width: 100%;
+  /* background-color: aqua; */
+  margin-top: -1em;
 }
 
 .defaultImageContainer {
@@ -129,10 +199,10 @@ html, body {
 
 
 .cardBottomHalf {
-  margin-top: 2em;
+  margin-top: 1em;
   height: 100%;
   width: 100%;
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
 
 
@@ -144,7 +214,21 @@ html, body {
 }
 
 .pokemonTypeContainer {
+  margin-top: -1em;
+}
+
+.pokemonTypeDescription{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  font-size: larger;
+  font-weight: 600;
+}
+
+
+.pokemonTypeContainer {
   margin-top: 1em;
+  margin-bottom: -1em;
 }
 
 .typeSymbol {

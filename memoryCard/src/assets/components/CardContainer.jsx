@@ -44,13 +44,14 @@ export default function CardContainer({
     <div className="CardContainer">
       {selectedMatchups.map((matchup) => (
         <PokemonCard
-          key={matchup.pokemonName}
+          key={matchup.isShadow ? matchup.pokemonName + " (Shadow)" : matchup.pokemonName}
           isSelected={false}
           pokemonName={matchup.pokemonName}
           pokemonSprite={matchup.pokemonSprite}
           pokemonShinySprite={matchup.pokemonShinySprite}
           pokemonTypeOne={matchup.pokemonTypeOne}
           pokemonTypeTwo={matchup.pokemonTypeTwo || 'N/A'} // Handle possibly undefined second type
+          isShadow={matchup.isShadow}
           onCardClick={()=> handleCardClick(matchup.pokemonName)}
         />
       ))}

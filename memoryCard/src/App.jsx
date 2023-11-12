@@ -90,6 +90,7 @@ function App() {
 
     </div>
     <div className='bottomHalf'>  
+   
       {isDataLoaded && isGameStarted && <CardContainer 
         key={"CardContainer"}
         setIsGameEnded={setIsGameEnded}
