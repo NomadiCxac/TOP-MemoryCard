@@ -1,9 +1,17 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Prevents scrolling */
+}
+
 #root {
-  max-width: 100vw;
-  max-height: 100vh;
-  margin: 0 auto;
-  padding: 2rem;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; /* This prevents scrolling */
+  margin: 0 auto; /* Centers your app horizontally if less than the width of the viewport */
   text-align: center;
+  padding: 1em; /* This padding could cause overflow if your content is too large */
+  box-sizing: border-box; /* Includes padding and border in the element's total width and height */
 }
 
 
@@ -36,6 +44,24 @@
   margin-right: 5em
 }
 
+.currentPokemon {
+  margin-right: 4em;
+  margin-top: -1.5em;
+}
+
+
+.PokemonCard.chosen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  background-color: lightgray;
+  width: 14vw;
+  height: 40vh;
+  pointer-events: none; /* Prevents all click, state and hover effects */
+  cursor: default; /* Resets the cursor to the default */
+}
 
 .PokemonCard {
   display: flex;
@@ -45,19 +71,66 @@
   border: 1px solid black;
   background-color: lightgray;
   width: 14vw;
-  height: 50vh;
+  height: 40vh;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.2s, transform 0.2s; /* Smooth transition for box-shadow and transform */
+  cursor: pointer; /* Changes the cursor to indicate that the item is clickable */
 }
+
+.PokemonCard:active {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Smaller shadow for pressed effect */
+  transform: translateY(2px); /* Moves the card down slightly when pressed */
+}
+
+.PokemonCard:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Slightly larger shadow for hover effect */
+}
+
+.PokemonCard:active {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Smaller shadow for pressed effect */
+  transform: translateY(2px); /* Moves the card down slightly when pressed */
+}
+
+.cardTitle {
+  margin-top: -0.75em;
+}
+
 
 .cardTopHalf {
   width: 75%;
-  height: 60%;
+  height: 50%;
   border: 1px solid black;
   padding: 1em;
   margin-top: 1em;
 }
 
+.pokemonImageContainer {
+  height: 100%;
+  margin-bottom: 3em;
+}
+
+.defaultImageContainer {
+  margin-right: 5em;
+  margin-bottom: -1em;
+}
+
+.shinyImageContainer {
+  margin-left: 5em;
+}
+
+
+.defaultImage,
+.shinyImage {
+  height: 6em;
+  width: 6em;
+}
+
+
+
+
 .cardBottomHalf {
-  margin-top: 1em;
+  margin-top: 2em;
+  height: 100%;
   width: 100%;
   border: 1px solid black;
 }
@@ -75,7 +148,15 @@
 }
 
 .typeSymbol {
-  width: 4em;
-  height: 4em;
+  width: 3em;
+  height: 3em;
 }
 
+.CardContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100vw;
+  margin-bottom: 2em;
+}

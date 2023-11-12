@@ -14,6 +14,7 @@ function App() {
   const [isGameStarted, setIsGameStarted] = useState(false)
   const [currentRound, setCurrentRound] = useState(0);
   const [currentScore, setCurrentScore] = useState(0); 
+  const [isGameEnded, setIsGameEnded] = useState(false);
 
   // Data for Game States
   const [isDataLoaded, setIsDataLoaded] = useState(false);
@@ -67,16 +68,23 @@ function App() {
         selectedMatchupType={selectedMatchupType}
         selectedMatchupList={selectedMatchupList}
         onFetchedData={handleFetchedData}
+        isGameStarted={isGameStarted}
+        currentRound={currentRound}
+        currentScore={currentScore}
+        isGameEnded={isGameEnded}
       />
 
       <div className='currentPokemon'>
-        {isDataLoaded &&<PokemonCard 
+        <h2>Selected Pokemon:</h2>
+        {isDataLoaded && <PokemonCard 
+          isSelected = {true}
           key={"currentPokemon-" + pokemonData.pokemonName}
           pokemonName={pokemonData.pokemonName}
           pokemonSprite={pokemonData.pokemonSprite}
           pokemonShinySprite={pokemonData.pokemonShinySprite}
           pokemonTypeOne={pokemonData.pokemonTypeOne}
           pokemonTypeTwo={pokemonData.pokemonTypeTwo}
+          onCardClick={null}
         />}
       </div>
 
@@ -84,11 +92,15 @@ function App() {
     <div className='bottomHalf'>  
       {isDataLoaded && isGameStarted && <CardContainer 
         key={"CardContainer"}
+        setIsGameEnded={setIsGameEnded}
+        isSelected ={false}
         pokemonMatchupsList={pokemonMatchupsList}
         setCurrentRound = {setCurrentRound}
         setCurrentScore = {setCurrentScore}
       />}
       </div>
+      
+      {isGameEnded && <div>Game Ended Dude</div>}
 
     </>
   )

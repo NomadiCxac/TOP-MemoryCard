@@ -5,8 +5,11 @@ export default function CardContainer({
   pokemonMatchupsList,
   setCurrentRound,
   setCurrentScore,
+  setIsGameEnded,
 }) {
   const [selectedMatchups, setSelectedMatchups] = useState([]);
+  const [clickedPokemons, setClickedPokemons] = useState([]);
+
 
   // Function to select a random subset of matchups
   const selectRandomMatchups = (matchups, numberToSelect) => {
@@ -19,19 +22,36 @@ export default function CardContainer({
     if (pokemonMatchupsList.length) {
       setSelectedMatchups(selectRandomMatchups(pokemonMatchupsList, 5));
     }
+    console.log(pokemonMatchupsList);
   }, [pokemonMatchupsList]);
+
+  function handleCardClick (pokemonName) {
+    if (clickedPokemons.includes(pokemonName)) {
+      setIsGameEnded(true);
+      return;
+    } else {
+      // Pokemon has not been clicked, update score and add to clicked list
+      setCurrentScore((prevScore) => prevScore + 1);
+      setCurrentRound((prevRound) => prevRound + 1)
+      setClickedPokemons((prevClicked) => [...prevClicked, pokemonName]);
+      console.log(clickedPokemons);
+    }
+  }
+  
 
   // Render the selected matchups
   return (
-    <div>
-      {selectedMatchups.map((matchup, index) => (
+    <div className="CardContainer">
+      {selectedMatchups.map((matchup) => (
         <PokemonCard
-          key={index}
+          key={matchup.pokemonName}
+          isSelected={false}
           pokemonName={matchup.pokemonName}
           pokemonSprite={matchup.pokemonSprite}
           pokemonShinySprite={matchup.pokemonShinySprite}
           pokemonTypeOne={matchup.pokemonTypeOne}
           pokemonTypeTwo={matchup.pokemonTypeTwo || 'N/A'} // Handle possibly undefined second type
+          onCardClick={()=> handleCardClick(matchup.pokemonName)}
         />
       ))}
     </div>

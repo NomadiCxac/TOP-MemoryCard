@@ -1,4 +1,4 @@
-    import { useState } from 'react';
+
     import { fetchDataForGame } from './pokeDataFetcher'; // Import the custom hook
 
     export default function GameConsole({
@@ -14,15 +14,6 @@
             const fields = [searchedPokemon, selectedCup, selectedMatchupType, selectedMatchupList]
             
             return fields.every(field => field !== "" && field != null);
-        }
-
-        function logValues () {
-            console.log(  
-                searchedPokemon,
-                selectedCup,
-                selectedMatchupType,
-                selectedMatchupList
-                )
         }
 
         async function handlePlayButtonClick() {
@@ -55,7 +46,7 @@
         return (
             <div className='gameConsole'>
             <button onClick={handlePlayButtonClick}>Play</button>
-            <div>Top 10 Best/Worst Matchups for Pokemon</div>
+            <div>Top 10 Best/Worst Matchups for {searchedPokemon} in the {selectedCup}</div>
             <div>Score</div>
         </div>
         )
