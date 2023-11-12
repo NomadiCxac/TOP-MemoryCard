@@ -1,12 +1,14 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import  GameSetUp  from './assets/components/gameSetupDashboard'
 import GameConsole from './assets/components/gameConsole'
 import './App.css'
 import PokemonQuery from './assets/functions/pokemonQuery'
 import PokemonVariant from './assets/functions/pokemonVariantQuery'
 import PokemonCard from './assets/components/pokemonCard'
+import CardContainer from './assets/components/CardContainer'
 
 function App() {
+  
 
   // Game State Progression
   const [isGameStarted, setIsGameStarted] = useState(false)
@@ -14,7 +16,6 @@ function App() {
   const [currentScore, setCurrentScore] = useState(0); 
 
   // Data for Game States
-  const [loading, setLoading] = useState(false);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [pokemonData, setPokemonData] = useState({});
   const [pokemonMatchupsList, setPokemonMatchupsList] = useState([]);
@@ -26,14 +27,18 @@ function App() {
   const [selectedMatchupType, setSelectedMatchupType,] = useState('');
   const [selectedMatchupList, setSelectedMatchupList] = useState('');
 
+
+
   // Handlers:
 
   function handleFetchedData (pokemon, matchups) {
     setPokemonData(pokemon);
     setPokemonMatchupsList(matchups);
+    console.log('handleFetchedData called with matchups:', matchups); // Log the matchups received
     setIsDataLoaded(true);
-  }
+    setIsGameStarted(true);
 
+  }
 
   return (
     <>
@@ -77,12 +82,12 @@ function App() {
 
     </div>
     <div className='bottomHalf'>  
-      {/* <CardContainer></CardContainer>
-    <h1>
-      Welcome to PokemonGO Memory Battler
-    </h1>
-    <PokemonVariant></PokemonVariant>
-      <PokemonQuery></PokemonQuery> */}
+      {isDataLoaded && isGameStarted && <CardContainer 
+        key={"CardContainer"}
+        pokemonMatchupsList={pokemonMatchupsList}
+        setCurrentRound = {setCurrentRound}
+        setCurrentScore = {setCurrentScore}
+      />}
       </div>
 
     </>

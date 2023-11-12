@@ -1,6 +1,7 @@
 import loadPokemonData from "./loadPokemonData.js";
 
 export async function main(pokemonString) {
+    console.log(pokemonString);
     try {
         // Load data for a specific Pokemon
         const testData = await loadPokemonData(pokemonString);

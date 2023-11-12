@@ -38,10 +38,13 @@ export default async function getMatchUpData (isMatchUpBest, pokemonString) {
 
     const parsedPokemonArray = parsePokemonNames(pokemonArray);
     console.log(parsedPokemonArray);
+
+    
     return parsedPokemonArray;
     } 
     
     catch (error) {
+        return null;
         console.error("An error occurred:", error);
     }
 
