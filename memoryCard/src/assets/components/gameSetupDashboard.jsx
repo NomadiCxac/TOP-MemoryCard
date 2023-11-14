@@ -69,10 +69,10 @@ export default function GameSetUp({
 
           {isGameStarted && 
           <>
-          <div className="settingTitle">Pokemon Matchup Data for: {searchedPokemon}</div>
-          <div className="settingTitle">Current League Cup: {selectedCup}</div>
-          <div className="settingTitle">Current Matchup Setting: {selectedMatchupType} Matchups</div>
-          <div className="settingTitle">Pokemon Matchup Data List Source: {selectedMatchupList}</div>
+            <div className="settingTitle">Pokemon Matchup Data for: {searchedPokemon}</div>
+            <div className="settingTitle">Current League Cup: {selectedCup}</div>
+            <div className="settingTitle">Current Matchup Setting: {selectedMatchupType} Matchups</div>
+            <div className="settingTitle">Pokemon Matchup Data List Source: {selectedMatchupList}</div>
           </>}
         </div>
       )

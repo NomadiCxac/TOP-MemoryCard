@@ -3,6 +3,9 @@
     import PokemonBattlerIntroText from './pokemonGOBattlerText';
 
     export default function GameConsole({
+        setIsLoading,
+        setError,
+        setErrorMessage,
         searchedPokemon,
         selectedCup,
         selectedMatchupType,
@@ -23,30 +26,34 @@
         }
 
         async function handlePlayButtonClick() {
+
             if (!validateInputFields()) {
                 console.log("Some fields are empty or not provided.");
                 return;
             }
+            setIsLoading(true);
 
             // Indicate loading etc...
             try {
-                console.log(searchedPokemon);
-                const data = await fetchDataForGame(selectedMatchupType, searchedPokemon);
+                const response = await fetchDataForGame(selectedMatchupType, searchedPokemon);
                 
-                if (data) {
-                    onFetchedData(data.pokemon, data.matchups);
-                    console.log("this is data matchups")
-                    console.log(data.matchups)
-
-                } else {
-                    console.error('Failed to fetch data');
+                if (response && !response.error) {
+                  setIsLoading(false);
+                  onFetchedData(response.pokemon, response.matchups);
+                  console.log("this is data matchups")
+                  console.log(response.matchups);
+                } else if (response && response.error) {
+                  setIsLoading(false);
+                  setError(true);
+                  setErrorMessage(response.message);
                 }
-            } catch (error) {
-                console.error('Error in fetching data:', error);
+              } catch (error) {
+                console.error("Error caught:", error);
+                setIsLoading(false);
+                setError(true);
+                setErrorMessage("Unexpected error occurred");
+              }
             }
-        }
-
-
 
 
         return (

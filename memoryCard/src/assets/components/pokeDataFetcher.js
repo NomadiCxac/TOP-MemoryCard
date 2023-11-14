@@ -89,6 +89,6 @@ export async function fetchDataForGame(matchupType, searchedPokemon) {
     };
   } catch (error) {
     console.error('Error fetching game data:', error);
-    return null; // Return null to indicate the fetch failed
+    return { error: true, message: error.message || "An error occurred" };
   }
 }
