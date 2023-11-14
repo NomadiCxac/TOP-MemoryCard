@@ -12,7 +12,14 @@ function parsePokemonNames(pokemonList) {
 
 export default async function getMatchUpData (isMatchUpBest, pokemonString) {
 
-    console.log(isMatchUpBest);
+    if (isMatchUpBest == "Worst") {
+        isMatchUpBest = false;
+    }
+
+    if (isMatchUpBest == "Best") {
+        isMatchUpBest = true;
+    }
+
 
     try {
         let pokemonMatchUpDataObject = await getTopMatchups(pokemonString)

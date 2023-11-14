@@ -57,10 +57,20 @@ function App() {
     console.log('handleFetchedData called with matchups:', matchups); // Log the matchups received
     setIsDataLoaded(true);
     setIsGameStarted(true);
-
-
-
   }
+
+  
+  function resetGame() {
+    setIsGameStarted(false);
+    setCurrentRound(0);
+    setCurrentScore(0);
+    setIsGameEnded(false);
+    setIsDataLoaded(false);
+    setPokemonData({});
+    setPokemonMatchupsList([]);
+    // Reset other states if necessary
+  }
+
 
   return (
     <>
@@ -75,14 +85,10 @@ function App() {
         setSelectedMatchupType={setSelectedMatchupType}
         selectedMatchupList={selectedMatchupList}
         setSelectedMatchupList={setSelectedMatchupList}
+        isGameStarted={isGameStarted}
       />
 
-      {/* <div className='gameSetupDashboard'>
-        <div>Poke Search</div>
-        <div>Pokemon List</div>
-        <div>League</div>
-        <div>Best / Worst</div>
-      </div> */}
+
       <GameConsole
         searchedPokemon={searchedPokemon}
         selectedCup={selectedCup}
@@ -93,10 +99,11 @@ function App() {
         currentRound={currentRound}
         currentScore={currentScore}
         isGameEnded={isGameEnded}
+        onResetGame={resetGame}
       />
 
       <div className='currentPokemon'>
-        <h2>Selected Pokemon:</h2>
+        {isDataLoaded && <h2>Selected Pokemon:</h2>}
         {isDataLoaded && <PokemonCard 
           isSelected = {true}
           key={"currentPokemon-" + pokemonData.pokemonName}

@@ -8,6 +8,11 @@
         selectedMatchupType,
         selectedMatchupList,
         onFetchedData,
+        isGameStarted,
+        currentRound,
+        currentScore,
+        isGameEnded,
+        onResetGame
     }) {
 
     
@@ -26,7 +31,7 @@
             // Indicate loading etc...
             try {
                 console.log(searchedPokemon);
-                const data = await fetchDataForGame(searchedPokemon);
+                const data = await fetchDataForGame(selectedMatchupType, searchedPokemon);
                 
                 if (data) {
                     onFetchedData(data.pokemon, data.matchups);
@@ -47,11 +52,31 @@
         return (
         <div className='gameConsole'>
             <div className='gcTopHalf'>
-                <PokemonBattlerIntroText />
+
+                {/* If Game is Not Started Display Help Text */}
+                {!isGameStarted && !isGameEnded && <PokemonBattlerIntroText />}
+
+
+                {/* If game is started play in progress */}
+                {isGameStarted && !isGameEnded &&
+                <div className='counterContainers'>
+                    <div> {searchedPokemon} vs. Top 10 {selectedMatchupType} Matchups</div>
+                    <div className='scoreCounter'>Current Score: {currentScore}</div>
+                    <div className='roundCounter'>Current Round: {currentRound}</div>    
+                </div>
+                }
+
+                {/* If game is ended display final result */}
+                {isGameEnded && <div>
+                    <div>Game Over</div>
+                    <button onClick={onResetGame}>Play Again?</button>
+                    
+                </div>}
+                
             </div>
+            
             <div className='gcBottomHalf'>
-                <button onClick={handlePlayButtonClick}>Start Game</button>
-                <div>Score</div>
+                {!isGameStarted && <button onClick={handlePlayButtonClick}>Start Game</button> }
             </div>
         </div>
         )

@@ -52,7 +52,7 @@ export async function fetchPokemonMatchups(matchupData) {
 }
 
 // Orchestrates the fetching of pokemon details and its matchups
-export async function fetchDataForGame(searchedPokemon) {
+export async function fetchDataForGame(matchupType, searchedPokemon) {
   console.log(`Fetching data for: ${searchedPokemon}`); // Log the Pokemon being searched
   try {
     const pokemonResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${searchedPokemon.toLowerCase()}`);
@@ -64,7 +64,7 @@ export async function fetchDataForGame(searchedPokemon) {
     console.log('Pokemon data:', pokemonJson); // Log fetched Pokemon data
 
      
-    const matchupData = await getMatchUpData(true, searchedPokemon); // Assume this returns an array
+    const matchupData = await getMatchUpData(matchupType, searchedPokemon); // Assume this returns an array
     if (!Array.isArray(matchupData)) {
       throw new Error('Matchup data is not an array');
     }

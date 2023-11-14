@@ -16,7 +16,7 @@ html, body {
 }
 
 .battlerText {
-  font-size: 10px;
+  font-size: 14px;
   display: flex;
   flex-direction: column;
   align-items: center; /* Align to the start of the main-axis */
@@ -113,6 +113,12 @@ button:focus {
   margin-left: 2em;
 }
 
+.settingTitle {
+  display: flex;
+  width: 100%;
+  margin-left: 1em;
+}
+
 
 .gameConsole {
   display: flex;
@@ -144,6 +150,8 @@ rgb(12, 48, 87);*/
   width: 100%;
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
 .currentPokemon {
