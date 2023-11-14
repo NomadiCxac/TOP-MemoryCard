@@ -25,16 +25,24 @@ export default function CardContainer({
     console.log(pokemonMatchupsList);
   }, [pokemonMatchupsList]);
 
-  function handleCardClick (pokemonName) {
-    if (clickedPokemons.includes(pokemonName)) {
+ 
+
+  function handleCardClick (pokemonName, isShadow) {
+
+    const pokemonIdentifier = isShadow ? `Shadow ${pokemonName}` : pokemonName;
+
+    if (clickedPokemons.includes(pokemonIdentifier)) {
       setIsGameEnded(true);
       return;
     } else {
       // Pokemon has not been clicked, update score and add to clicked list
       setCurrentScore((prevScore) => prevScore + 1);
       setCurrentRound((prevRound) => prevRound + 1)
-      setClickedPokemons((prevClicked) => [...prevClicked, pokemonName]);
+      setClickedPokemons((prevClicked) => [...prevClicked, pokemonIdentifier]);
+
       console.log(clickedPokemons);
+      setSelectedMatchups(selectRandomMatchups(pokemonMatchupsList, 5));
+      
     }
   }
   
@@ -52,7 +60,7 @@ export default function CardContainer({
           pokemonTypeOne={matchup.pokemonTypeOne}
           pokemonTypeTwo={matchup.pokemonTypeTwo || 'N/A'} // Handle possibly undefined second type
           isShadow={matchup.isShadow}
-          onCardClick={()=> handleCardClick(matchup.pokemonName)}
+          onCardClick={()=> handleCardClick(matchup.pokemonName, matchup.isShadow)}
         />
       ))}
     </div>

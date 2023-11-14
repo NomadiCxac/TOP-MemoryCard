@@ -29,6 +29,25 @@ function App() {
   const [selectedMatchupList, setSelectedMatchupList] = useState('');
 
 
+  useEffect(() => {
+    // This code runs whenever currentScore changes
+    console.log('Current Score has changed:', currentScore);
+
+    // If you want to perform some action based on the score change, do it here
+    // For example, you might want to check if a new high score has been reached
+    // and update some state or localStorage, etc.
+
+  }, [currentScore]); // Only re-run the effect if currentScore changes
+
+  useEffect(() => {
+    // This code runs whenever currentScore changes
+    console.log('Game Has Ended');
+
+    // If you want to perform some action based on the score change, do it here
+    // For example, you might want to check if a new high score has been reached
+    // and update some state or localStorage, etc.
+
+  }, [isGameEnded]); // Only re-run the effect if currentScore changes
 
   // Handlers:
 
@@ -38,6 +57,8 @@ function App() {
     console.log('handleFetchedData called with matchups:', matchups); // Log the matchups received
     setIsDataLoaded(true);
     setIsGameStarted(true);
+
+
 
   }
 

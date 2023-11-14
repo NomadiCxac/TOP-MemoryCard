@@ -1,5 +1,6 @@
 
     import { fetchDataForGame } from './pokeDataFetcher'; // Import the custom hook
+    import PokemonBattlerIntroText from './pokemonGOBattlerText';
 
     export default function GameConsole({
         searchedPokemon,
@@ -46,7 +47,7 @@
         return (
         <div className='gameConsole'>
             <div className='gcTopHalf'>
-                <div>Top 10 Best/Worst Matchups for {searchedPokemon} in the {selectedCup}</div>
+                <PokemonBattlerIntroText />
             </div>
             <div className='gcBottomHalf'>
                 <button onClick={handlePlayButtonClick}>Start Game</button>
