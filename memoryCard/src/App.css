@@ -81,12 +81,22 @@ button:focus {
   outline: none;
 }
 
+
+
 .topHalf,
 .bottomHalf {
   display: flex;
   width: 100vw;
   height: 50vh;
+}
+
+.topHalf {
   justify-content: space-between;
+}
+
+.bottomHalf {
+  align-items: center;
+  justify-content: center;
 }
 
 .gameSetupDashboard {

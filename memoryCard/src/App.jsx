@@ -145,10 +145,10 @@ function App() {
       {loading &&  <div>Pokemon Data is Loading...</div>}
 
       {error && 
-      <>
+      <div>
       <div>Error: {errorMessage}</div>
       <button onClick={resetGame}>Restart Search</button>
-      </>}
+      </div>}
    
       {isDataLoaded && isGameStarted && !error && <CardContainer 
         key={"CardContainer"}
