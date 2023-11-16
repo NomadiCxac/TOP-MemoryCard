@@ -1,6 +1,6 @@
 export default function loadPokemonData(pokemonName) {
     // Update this line to point to the public URL where the matchup data is served
-    const dataUrl = `/data/allPokemonMatchups/${pokemonName.toLowerCase()}-matchup.json`;
+    const dataUrl = `./data/allPokemonMatchups/${pokemonName.toLowerCase()}-matchup.json`;
   
     console.log(`Loading from: ${dataUrl}`);
   
