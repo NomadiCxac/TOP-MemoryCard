@@ -45,10 +45,10 @@ jobs:
         uses: actions/upload-pages-artifact@v2
         with:
           path: './dist'
-      - name: Upload artifact 2
-        uses: actions/upload-pages-artifact@v2
-        with:
-          path: './public/data/allPokemonMatchups/'
+      # - name: Upload artifact 2
+      #   uses: actions/upload-pages-artifact@v2
+      #   with:
+      #     path: './public/data/allPokemonMatchups/'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
